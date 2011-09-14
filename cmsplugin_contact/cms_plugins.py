@@ -76,15 +76,17 @@ class ContactPlugin(CMSPluginBase):
                 pass
             FormClass = ContactForm
         elif instance.get_spam_protection_method_display() == 'ReCAPTCHA':
-            RecaptchaContactForm.recaptcha_public_key = getattr(
-                settings, "RECAPTCHA_PUBLIC_KEY",
-                instance.recaptcha_public_key)
-            RecaptchaContactForm.recaptcha_private_key = getattr(
-                settings, "RECAPTCHA_PRIVATE_KEY",
-                instance.recaptcha_private_key)
-            RecaptchaContactForm.recaptcha_theme = instance.recaptcha_theme
+            #if you really want the user to be able to set the key in
+            # every form, this should be more flexible
             class ContactForm(self.contact_form, RecaptchaContactForm):
-                pass
+                recaptcha_public_key = getattr(
+                    settings, "RECAPTCHA_PUBLIC_KEY",
+                    instance.recaptcha_public_key)
+                recaptcha_private_key = getattr(
+                    settings, "RECAPTCHA_PRIVATE_KEY",
+                    instance.recaptcha_private_key)
+                recaptcha_theme = instance.recaptcha_theme
+
             FormClass = ContactForm
         else:
             class ContactForm(self.contact_form, HoneyPotContactForm):
