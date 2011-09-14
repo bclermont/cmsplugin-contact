@@ -12,6 +12,7 @@
   </p>
   {% endfor %}
   
+  {% if form.recaptcha_challenge_field %}
   <div{% if form.recaptcha_response_field.errors %} class="error"{% endif %}>
     {{ form.recaptcha_challenge_field }}
     {% if form.recaptcha_theme == "custom" %}
@@ -34,26 +35,27 @@
       <div><a href="javascript:Recaptcha.showhelp()">{% trans "Help" %}</a>
 	
       </div>
-      {% endif %}
-      
-      {% if form.recaptcha_response_field.label %}<label>{{ form.recaptcha_response_field.label }}</label><br />{% endif %}
-      {{ form.recaptcha_response_field }}
-      {% if form.recaptcha_response_field.errors %}
-      {% for error in form.recaptcha_response_field.errors %}
-      <span class="error_msg">{% trans error %}</span>
-      {% endfor %}
-      {% endif %}
     </div>
     {% endif %}
     
-    {% if form.accept_terms %}
-    {{ form.accept_terms }}
+    {% if form.recaptcha_response_field.label %}<label>{{ form.recaptcha_response_field.label }}</label><br />{% endif %}
+    {{ form.recaptcha_response_field }}
+    {% if form.recaptcha_response_field.errors %}
+    {% for error in form.recaptcha_response_field.errors %}
+    <span class="error_msg">{% trans error %}</span>
+    {% endfor %}
     {% endif %}
-    <p>
-      <input type="submit"{% if contact.submit %} value="{{ contact.submit }}"{% endif %} />
-    </p>
-    
-    {% csrf_token %}
+  </div>
+  {% endif %}
+  
+  {% if form.accept_terms %}
+  {{ form.accept_terms }}
+  {% endif %}
+  <p>
+    <input type="submit"{% if contact.submit %} value="{{ contact.submit }}"{% endif %} />
+  </p>
+  
+  {% csrf_token %}
 </form>
 
 {% else %}
