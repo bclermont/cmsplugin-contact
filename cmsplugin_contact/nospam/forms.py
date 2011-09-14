@@ -38,7 +38,8 @@ class AkismetForm(BaseForm):
 
 
 class RecaptchaForm(BaseForm):
-    recaptcha_challenge_field = forms.CharField(widget=RecaptchaChallenge)
+    recaptcha_challenge_field = forms.CharField(widget=RecaptchaChallenge,
+                                                label="")
     recaptcha_response_field = forms.CharField(
                 widget = RecaptchaResponse,
                 label = _('Please enter the two words on the image separated '
