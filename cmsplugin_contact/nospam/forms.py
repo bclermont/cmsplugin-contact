@@ -32,14 +32,17 @@ class AkismetForm(BaseForm):
         fields = {}
         for key, value in self.akismet_fields.items():
             fields[key] = self.cleaned_data[value]
-        return utils.akismet_check(self._request, akismet_api_key=self.akismet_api_key, **fields)
+        return utils.akismet_check(self._request,
+                                   akismet_api_key=self.akismet_api_key,
+                                   **fields)
 
 
 class RecaptchaForm(BaseForm):
     recaptcha_challenge_field = forms.CharField(widget=RecaptchaChallenge)
     recaptcha_response_field = forms.CharField(
                 widget = RecaptchaResponse,
-                label = _('Please enter the two words on the image separated by a space:'),
+                label = _('Please enter the two words on the image separated '
+                          'by a space:'),
                 error_messages = {
                     'required': _('You did not enter any of the words.')
             })
@@ -64,9 +67,17 @@ class RecaptchaForm(BaseForm):
                 args = (args[0], data) + args[2:]
                 
         super(RecaptchaForm, self).__init__(*args, **kwargs)
-        self._recaptcha_public_key = getattr(self, 'recaptcha_public_key', getattr(settings, 'RECAPTCHA_PUBLIC_KEY', None))
-        self._recaptcha_private_key = getattr(self, 'recaptcha_private_key', getattr(settings, 'RECAPTCHA_PRIVATE_KEY', None))
-        self._recaptcha_theme = getattr(self, 'recaptcha_theme', getattr(settings, 'RECAPTCHA_THEME', 'clean'))
+        self._recaptcha_public_key = getattr(self, 'recaptcha_public_key',
+                                             getattr(settings,
+                                                     'RECAPTCHA_PUBLIC_KEY',
+                                                     None))
+        self._recaptcha_private_key = getattr(self, 'recaptcha_private_key',
+                                              getattr(settings,
+                                                      'RECAPTCHA_PRIVATE_KEY',
+                                                      None))
+        self._recaptcha_theme = getattr(self, 'recaptcha_theme',
+                                        getattr(settings, 'RECAPTCHA_THEME',
+                                                'clean'))
         self.fields['recaptcha_response_field'].widget.public_key = self._recaptcha_public_key
         self.fields['recaptcha_response_field'].widget.theme = self._recaptcha_theme
         # Move the ReCAPTCHA fields to the end of the form
@@ -89,13 +100,16 @@ class RecaptchaForm(BaseForm):
             rcf = self.cleaned_data['recaptcha_challenge_field']
             rrf = self.cleaned_data['recaptcha_response_field']
             if rrf == '':
-                raise forms.ValidationError(_('You did not enter the two words shown in the image.'))
+                raise forms.ValidationError(_('You did not enter the two words '
+                                              'shown in the image.'))
             else:
                 from recaptcha.client import captcha as recaptcha
                 ip = self._request.META['REMOTE_ADDR']
-                check = recaptcha.submit(rcf, rrf, self._recaptcha_private_key, ip)
+                check = recaptcha.submit(rcf, rrf,
+                                         self._recaptcha_private_key, ip)
                 if not check.is_valid:
-                    raise forms.ValidationError(_('The words you entered did not match the image.'))
+                    raise forms.ValidationError(_('The words you entered did '
+                                                  'not match the image.'))
 
 class HoneyPotForm(BaseForm):
     accept_terms = HoneypotField()

@@ -13,10 +13,16 @@ class KeyField(CharField):
         pass
 
 class ContactAdminForm(ModelForm):
-    akismet_api_key = KeyField(max_length=255, label=_("Akismet API Key"), help_text=_('Get a Wordpress Key from http://akismet.com/'))
+    akismet_api_key = KeyField(max_length=255,label=_("Akismet API Key"), 
+                               help_text=_('Get a Wordpress Key from '
+                                           'http://akismet.com/'))
 
-    recaptcha_public_key = KeyField(max_length=255, label=_("ReCAPTCHA Public Key"), help_text=_('Get this from http://www.google.com/recaptcha'))
-    recaptcha_private_key = KeyField(max_length=255, label=_("ReCAPTCHA Private Key"), help_text=_('Get this from http://www.google.com/recaptcha'))
+    recaptcha_public_key = KeyField(
+        max_length=255, label=_("ReCAPTCHA Public Key"),
+        help_text=_('Get this from http://www.google.com/recaptcha'))
+    recaptcha_private_key = KeyField(
+        max_length=255, label=_("ReCAPTCHA Private Key"),
+        help_text=_('Get this from http://www.google.com/recaptcha'))
     
     class Meta:
         model = Contact
@@ -33,10 +39,13 @@ class ContactAdminForm(ModelForm):
         try:
             from akismet import Akismet
         except ImportError:
-           self._add_error('spam_protection_method', _('Akismet library is not installed. Use "easy_install akismet" or "pip install akismet".'))
+            self._add_error('spam_protection_method',
+                            _('Akismet library is not installed. Use '
+                              '"easy_install akismet" or "pip install '
+                              'akismet".'))
         
-        api_key = getattr(settings, "AKISMET_API_KEY", \
-                  self.cleaned_data['akismet_api_key'])
+        api_key = getattr(settings, "AKISMET_API_KEY", 
+                          self.cleaned_data['akismet_api_key'])
         
         if not hasattr(settings, "AKISMET_API_KEY"):
             if not api_key:
@@ -44,7 +53,8 @@ class ContactAdminForm(ModelForm):
             else:
                 ak = Akismet(
                     key = api_key,
-                    blog_url = 'http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain
+                    blog_url = 'http://%s/' % (
+                        Site.objects.get(pk=settings.SITE_ID).domain)
                 )
                 if not ak.verify_key():
                     add_error(_('The API Key is not valid.'))
@@ -55,17 +65,22 @@ class ContactAdminForm(ModelForm):
         try:
             from recaptcha.client import captcha as recaptcha
         except ImportError:
-            self._add_error('spam_protection_method', _('ReCAPTCHA library is not installed. Use "easy_install recaptcha-client" or "pip install recaptcha-client".'))
+            self._add_error('spam_protection_method',
+                            _('ReCAPTCHA library is not installed. '
+                              'Use "easy_install recaptcha-client" or '
+                              '"pip install recaptcha-client".'))
             
-        public_key = getattr(settings, "RECAPTCHA_PUBLIC_KEY", \
-                     self.cleaned_data['recaptcha_public_key'])
-        private_key = getattr(settings, "RECAPTCHA_PRIVATE_KEY", \
-                      self.cleaned_data['recaptcha_private_key'])
+        public_key = getattr(settings, "RECAPTCHA_PUBLIC_KEY",
+                             self.cleaned_data['recaptcha_public_key'])
+        private_key = getattr(settings, "RECAPTCHA_PRIVATE_KEY",
+                              self.cleaned_data['recaptcha_private_key'])
         
         if not public_key:
-            self._add_error('recaptcha_public_key', Field.default_error_messages['required'])
+            self._add_error('recaptcha_public_key',
+                            Field.default_error_messages['required'])
         if not private_key:
-            self._add_error('recaptcha_private_key', Field.default_error_messages['required'])
+            self._add_error('recaptcha_private_key',
+                            Field.default_error_messages['required'])
             
     
     def clean(self):
