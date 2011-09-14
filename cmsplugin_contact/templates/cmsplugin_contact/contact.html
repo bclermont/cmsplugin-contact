@@ -2,16 +2,16 @@
 
 {% if form %}
 <form action="" method="post">
-  {% with form.email as field %}{% with contact.email_label as label %}
-  {% include "cmsplugin_contact/field.html" %}
-  {% endwith %}{% endwith %}
-  {% with form.subject as field %}{% with contact.subject_label as label %}
-  {% include "cmsplugin_contact/field.html" %}
-  {% endwith %}{% endwith %}
-  {% with form.content as field %}{% with contact.content_label as label %}
-  {% include "cmsplugin_contact/field.html" %}
-  {% endwith %}{% endwith %}
-  {% if form.recaptcha_challenge_field %}
+  {% for field in form %}
+  <p{% if field.errors %} class="error"{% endif %}>
+    {{ field.label_tag }}<br />
+    {{ field }}
+    {% for error in field.errors %}
+    <span class="error_msg">{{ error }}</span>
+    {% endfor %}
+  </p>
+  {% endfor %}
+  
   <div{% if form.recaptcha_response_field.errors %} class="error"{% endif %}>
     {{ form.recaptcha_challenge_field }}
     {% if form.recaptcha_theme == "custom" %}
