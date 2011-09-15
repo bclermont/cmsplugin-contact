@@ -10,8 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class BaseForm(forms.Form):
-    
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, request=None, *args, **kwargs):
+        if request is None:
+            raise TypeError("Keyword argument 'request' must be supplied")
         self._request = request
         super(BaseForm, self).__init__(*args, **kwargs)
         
@@ -38,7 +39,8 @@ class AkismetForm(BaseForm):
 
 
 class RecaptchaForm(BaseForm):
-    recaptcha_challenge_field = forms.CharField(widget=RecaptchaChallenge)
+    recaptcha_challenge_field = forms.CharField(widget=RecaptchaChallenge,
+                                                label="")
     recaptcha_response_field = forms.CharField(
                 widget = RecaptchaResponse,
                 label = _('Please enter the two words on the image separated '
@@ -78,11 +80,17 @@ class RecaptchaForm(BaseForm):
         self._recaptcha_theme = getattr(self, 'recaptcha_theme',
                                         getattr(settings, 'RECAPTCHA_THEME',
                                                 'clean'))
-        self.fields['recaptcha_response_field'].widget.public_key = self._recaptcha_public_key
-        self.fields['recaptcha_response_field'].widget.theme = self._recaptcha_theme
+        (self.fields['recaptcha_response_field']
+                                .widget.public_key) = self._recaptcha_public_key
+        (self.fields['recaptcha_response_field']
+                                .widget.theme) = self._recaptcha_theme
         # Move the ReCAPTCHA fields to the end of the form
-        self.fields['recaptcha_challenge_field'] = self.fields.pop('recaptcha_challenge_field')
-        self.fields['recaptcha_response_field'] = self.fields.pop('recaptcha_response_field')
+        self.fields['recaptcha_'
+                    'challenge_field'] = self.fields.pop('recaptcha_'
+                                                         'challenge_field')
+        self.fields['recaptcha_'
+                    'response_field'] = self.fields.pop('recaptcha_'
+                                                        'response_field')
 
        
     def clean_recaptcha_response_field(self):
