@@ -15,12 +15,16 @@ class BaseForm(forms.Form):
             raise TypeError("Keyword argument 'request' must be supplied")
         self._request = request
         super(BaseForm, self).__init__(*args, **kwargs)
-        
-
-
 
 class AkismetForm(BaseForm):
+    """
+    Besides doing the askimet check, it adds an
+    Akismet spam check for the body to the validation routine.
+
+    Requires the setting ``AKISMET_API_KEY``, which should be a valid
+    Akismet API key.
     
+    """    
     akismet_fields = {
             'comment_author': 'name',
             'comment_author_email': 'email',
@@ -36,6 +40,29 @@ class AkismetForm(BaseForm):
         return utils.akismet_check(self._request,
                                    akismet_api_key=self.akismet_api_key,
                                    **fields)
+
+    def clean_body(self):
+        """
+        Perform Akismet validation of the message.        
+        """
+        if 'body' in self.cleaned_data and getattr(settings,
+                                                   'AKISMET_API_KEY', ''):
+            from akismet import Akismet
+            from django.utils.encoding import smart_str
+            akismet_api = Akismet(key=settings.AKISMET_API_KEY,
+                                  blog_url='http://%s/' % (
+                    Site.objects.get_current().domain))
+            if akismet_api.verify_key():
+                akismet_data = {
+                    'comment_type': 'comment',
+                    'referer': self.request.META.get('HTTP_REFERER', ''),
+                    'user_ip': self.request.META.get('REMOTE_ADDR', ''),
+                    'user_agent': self.request.META.get('HTTP_USER_AGENT', '') }
+                if akismet_api.comment_check(smart_str(self.cleaned_data['body']),
+                                             data=akismet_data, build_data=True):
+                    raise forms.ValidationError(_("Akismet thinks this message "
+                                                  "is spam"))
+        return self.cleaned_data['body']
 
 
 class RecaptchaForm(BaseForm):
