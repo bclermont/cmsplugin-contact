@@ -11,14 +11,6 @@
     {% endfor %}
   </p>
   {% endfor %}
-  {% comment %}
-
-  I'm commenting this out for now, until I figure out how to make it work properly
-  
-  {% if form.accept_terms %}
-  {{ form.accept_terms }}
-  {% endif %}
-  {% endcomment %}
   <p>
     <input type="submit"{% if contact.submit %} value="{{ contact.submit }}"{% endif %} />
   </p>

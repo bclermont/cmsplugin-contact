@@ -147,7 +147,9 @@ class RecaptchaForm(BaseForm):
                                                   'not match the image.'))
 
 class HoneyPotForm(BaseForm):
-    accept_terms = HoneypotField()
+    pass
+    # I'm commenting this out until I figure it out
+    #accept_terms = HoneypotField()
     
 
 
