@@ -10,8 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class BaseForm(forms.Form):
-    
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, request=None, *args, **kwargs):
+        if request is None:
+            raise TypeError("Keyword argument 'request' must be supplied")
         self._request = request
         super(BaseForm, self).__init__(*args, **kwargs)
         

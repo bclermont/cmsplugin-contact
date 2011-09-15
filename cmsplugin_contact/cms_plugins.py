@@ -61,7 +61,6 @@ class ContactPlugin(CMSPluginBase):
             help_text=thanks_field.help_text)
         return TextPluginForm
 
-
     def get_form(self, request, obj=None, **kwargs):
         plugins = plugin_pool.get_text_enabled_plugins(self.placeholder,
                                                        self.page)
@@ -92,47 +91,36 @@ class ContactPlugin(CMSPluginBase):
             class ContactForm(self.contact_form, HoneyPotContactForm):
                 pass
             FormClass = ContactForm
-            
+        
+        # arguments required by the new form class
+        form_args = {
+            'request': request,
+            'from_email': instance.site_email,
+            'subject_template_name': 'cmsplugin_contact/subject.txt',
+            'template_name': self.email_template,
+            }
         if request.method == "POST":
-            return FormClass(request, data=request.POST)
+            return FormClass(data=request.POST, **form_args)
         else:
-            return FormClass(request)
+            return FormClass(**form_args)
 
-
-    def send(self, form, site_email):
-        subject = form.cleaned_data['subject']
-        if not subject:
-            subject = _('No subject')
-        email_message = EmailMessage(
-            render_to_string("cmsplugin_contact/subject.txt", {
-                'subject': subject,
-            }),
-            render_to_string(self.email_template, {
-                'data': form.cleaned_data,
-            }),
-            form.cleaned_data['email'],
-            [site_email],
-            headers = {
-                'Reply-To': form.cleaned_data['email']
-            },)
-        email_message.send(fail_silently=True)
-    
     def render(self, context, instance, placeholder):
         request = context['request']
 
         form = self.create_form(instance, request)
     
         if request.method == "POST" and form.is_valid():
-            self.send(form, instance.site_email)
-            context.update( {
-                'contact': instance,
-            })
+            if form.is_valid():
+                form.save(fail_silently=True)
+                context.update( {
+                        'contact': instance,
+                        })
         else:
             context.update({
                 'contact': instance,
                 'form': form,
             })
-            
+
         return context
 
     def render_change_form(self, request, context, add=False, change=False,
