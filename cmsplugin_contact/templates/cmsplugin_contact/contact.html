@@ -1,22 +1,12 @@
 {% load i18n %}
-
 {% if form %}
 <form action="" method="post">
-    {% for field in form %}
-    <p{% if field.errors %} class="error"{% endif %}>
-    {{ field.label_tag }}<br />
-    {{ field }}
-    {% for error in field.errors %}
-    <span class="error_msg">{{ error }}</span>
-    {% endfor %}
-    </p>
-    {% endfor %}
+    {% csrf_token %}
+    {{ form.as_p }}
 
     <p>
         <input type="submit"{% if contact.submit %} value="{{ contact.submit }}"{% endif %} />
     </p>
-
-    {% csrf_token %}
 </form>
 {% else %}
 {{ contact.thanks|safe }}
