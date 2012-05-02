@@ -19,6 +19,7 @@ class ContactPlugin(CMSPluginBase):
     render_template = "cmsplugin_contact/contact.html"
     form = ContactAdminForm
     contact_form = ContactForm
+    subject_template = "cmsplugin_contact/subject.txt"
     email_template = "cmsplugin_contact/email.txt"
     
     fieldsets = (
@@ -104,6 +105,24 @@ class ContactPlugin(CMSPluginBase):
         else:
             return FormClass(**form_args)
 
+    def send(self, form, site_email):
+        subject = form.cleaned_data['subject']
+        if not subject:
+            subject = _('No subject')
+        email_message = EmailMessage(
+            render_to_string(self.subject_template, {
+                'subject': subject,
+            }).splitlines()[0],
+            render_to_string(self.email_template, {
+                'data': form.cleaned_data,
+            }),
+            form.cleaned_data['email'],
+            [site_email],
+            headers = {
+                'Reply-To': form.cleaned_data['email']
+            },)
+        email_message.send(fail_silently=False)
+    
     def render(self, context, instance, placeholder):
         request = context['request']
 

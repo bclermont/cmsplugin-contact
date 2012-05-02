@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Sergey.Voronezhskiy <Sergey.Voronezhskiy@gmail.com>, 2012.
 #
 #, fuzzy
 msgid ""
@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-22 15:23+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-03-20 13:56+0400\n"
+"Last-Translator: Sergey.Voronezhskiy <Sergey.Voronezhskiy@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -20,160 +20,160 @@ msgstr ""
 
 #: admin.py:16
 msgid "Akismet API Key"
-msgstr ""
+msgstr "Akismet API Ключ"
 
 #: admin.py:16
 msgid "Get a Wordpress Key from http://akismet.com/"
-msgstr "Wordpress Key von http://akismet.com/"
+msgstr "Создайте новый ключ на сайте http://akismet.com/"
 
 #: admin.py:18
 msgid "ReCAPTCHA Public Key"
-msgstr ""
+msgstr "ReCAPTCHA Публичный ключ"
 
 #: admin.py:18 admin.py:19
 msgid "Get this from http://www.google.com/recaptcha"
-msgstr "Erhältlich von http://www.google.com/recaptcha"
+msgstr "Создайте новый ключ на сайте http://www.google.com/recaptcha"
 
 #: admin.py:19
 msgid "ReCAPTCHA Private Key"
-msgstr ""
+msgstr "ReCAPTCHA Приватный ключ"
 
 #: admin.py:36
 msgid ""
 "Akismet library is not installed. Use \"easy_install akismet\" or \"pip "
 "install akismet\"."
 msgstr ""
-"Die Akismet Bibliothek ist nicht installiert. Zum installieren: "
-"\"easy_install akismet\" oder \"pip install akismet\""
+"Библиотека Akismet не установлена. Установите её с помощью \"easy_install akismet\" "
+"либо \"pip install akismet\""
 
 #: admin.py:50
 msgid "The API Key is not valid."
-msgstr "Der API Key ist ungültig."
+msgstr "Неверный API ключ"
 
 #: admin.py:58
 msgid ""
 "ReCAPTCHA library is not installed. Use \"easy_install recaptcha-client\" or "
 "\"pip install recaptcha-client\"."
 msgstr ""
-"Die ReCAPTCHA Bibliothek ist nicht installiert. Zum installieren: "
-"\"easy_install recaptcha-client\" oder \"pip install recaptcha-client\""
+"Библиотека ReCAPTCHA не установлена. Установите её с помощью \"easy_install recaptcha-client\" "
+"либо \"pip install recaptcha-client\""
 
 #: cms_plugins.py:17
 msgid "Contact Form"
-msgstr "Kontaktformular"
+msgstr "Форма обратной связи"
 
 #: cms_plugins.py:25
 msgid "Spam Protection"
-msgstr "Spamschutz"
+msgstr "Защита от спама"
 
 #: cms_plugins.py:84
 msgid "No subject"
-msgstr "Kein Betreff"
+msgstr "Без темы"
 
 #: models.py:20
 msgid "Email recipient"
-msgstr "E-Mail Empfänger"
+msgstr "E-mail адрес получателя"
 
 #: models.py:21
 msgid "Email sender label"
-msgstr "E-Mail Absender Beschriftung"
+msgstr "Надпись для поля email"
 
 #: models.py:21
 msgid "Your email address"
-msgstr "Ihre E-Mail Adresse"
+msgstr "Ваш E-mail адрес"
 
 #: models.py:22
 msgid "Subject label"
-msgstr "Betreff Beschriftung"
+msgstr "Надпись для поля subject"
 
 #: models.py:22
 msgid "Subject"
-msgstr "Betreff"
+msgstr "Тема"
 
 #: models.py:23
 msgid "Message content label"
-msgstr "Nachrichteninhalt Beschriftung"
+msgstr "Надпись для поля content"
 
 #: models.py:23
 msgid "Message"
-msgstr "Nachricht"
+msgstr "Сообщение"
 
 #: models.py:24
 msgid "Thanks message"
-msgstr "Dankesnachricht"
+msgstr "Благодарное сообщение"
 
 #: models.py:24
 msgid "Message displayed on successful submit"
-msgstr "Nachricht nach erfolgreichem Absenden"
+msgstr "Сообщение о успешной отправки"
 
 #: models.py:24
 msgid "Thank you for your message."
-msgstr "Vielen Dank für Ihre Nachricht."
+msgstr "Спасибо за Ваше сообщение."
 
 #: models.py:25
 msgid "Submit button value"
-msgstr "Senden Button Beschriftung"
+msgstr "Надпись на кнопке отправить"
 
 #: models.py:25
 msgid "Submit"
-msgstr "Senden"
+msgstr "Отправить"
 
 #: models.py:27
 msgid "Spam protection method"
-msgstr "Spamschutzmethode"
+msgstr "Метод защиты от спама"
 
 #: models.py:33
 msgid "ReCAPTCHA theme"
-msgstr "ReCAPTCHA Theme"
+msgstr "ReCAPTCHA тема"
 
 #: nospam/fields.py:13
 msgid "Please don't check this box."
-msgstr "Bitte nicht anklicken."
+msgstr "Пожалуйста не устанавливайте этот чекбокс"
 
 #: nospam/forms.py:42
 msgid "Please enter the two words on the image separated by a space:"
-msgstr "Geben Sie bitte die beiden Wörter im Bild, durch ein Leerzeichen getrennt, ein."
+msgstr "Пожалуйста введите два слова на картинке разделенные пробелом:"
 
 #: nospam/forms.py:44
 msgid "You did not enter any of the words."
-msgstr "Sie haben keines der Wörter eingegeben."
+msgstr "Вы не ввели никаких слов."
 
 #: nospam/forms.py:92
 msgid "You did not enter the two words shown in the image."
-msgstr "Sie haben die beiden Wörter im Bild nicht eingegeben."
+msgstr "Вы не ввели двух слва указанных на картинке"
 
 #: nospam/forms.py:98
 msgid "The words you entered did not match the image"
-msgstr "Die eingegebenen Wörter waren nicht richtig."
+msgstr "Слова введенные вами не совпадают с указанными на картинке"
 
 #: nospam/widgets.py:30
 msgid "Are you a robot?"
-msgstr "Sind Sie ein Robot?"
+msgstr "Вы робот?"
 
 #: templates/cmsplugin_contact/contact.html:39
 msgid "Incorrect please try again"
-msgstr "Eingabe nicht korrekt, bitte erneut versuchen"
+msgstr "Неверно, пожалуста попробуйте снова"
 
 #: templates/cmsplugin_contact/contact.html:42
 msgid "Enter the words above:"
-msgstr "Obige Wörter eingeben:"
+msgstr "Введите слова указанные выше:"
 
 #: templates/cmsplugin_contact/contact.html:43
 msgid "Enter the numbers you hear:"
-msgstr "Die gehörten Zahlen eingeben:"
+msgstr "Введите числа которые вы услышали:"
 
 #: templates/cmsplugin_contact/contact.html:48
 msgid "Get another CAPTCHA"
-msgstr "Anderes CAPTCHA"
+msgstr "Поменять CAPTCHA на другую"
 
 #: templates/cmsplugin_contact/contact.html:49
 msgid "Get an audio CAPTCHA"
-msgstr "Audio CAPTCHA"
+msgstr "Прослушать звуковую CAPTCHA"
 
 #: templates/cmsplugin_contact/contact.html:50
 msgid "Get an image CAPTCHA"
-msgstr "Bild CAPTCHA"
+msgstr "Вывести изображение с CAPTCHA"
 
 #: templates/cmsplugin_contact/contact.html:52
 msgid "Help"
-msgstr "Hilfe"
+msgstr "Помощь"

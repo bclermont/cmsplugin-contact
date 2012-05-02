@@ -14,13 +14,13 @@ Dependencies
 Python Libs
 -----------
 
-If you decide to use the ReCAPTCHA spam protection method you need to install the python library "recaptcha-client" (package ``python-recaptcha`` in Debian).
+If you decide to use the ReCAPTCHA spam protection method you need to install the python library ``recaptcha-client`` (package ``python-recaptcha`` in Debian).
 
-If you use Akismet for spam protection "akismet" is needed. You also need to set your domain url in django admin "sites".
+If you use Akismet for spam protection ``akismet`` is needed. You also need to set your domain url in django admin in the section "sites".
 
 Both libraries can be installed by ``pip`` or ``easy_install``.
 
-It is recommended but not required to use South. Again it can be easily installed by or ``pip`` or ``easy_install``.
+It is recommended but not required to use South. Again it can be easily installed by ``pip`` or ``easy_install``.
 
 Installation
 ============
