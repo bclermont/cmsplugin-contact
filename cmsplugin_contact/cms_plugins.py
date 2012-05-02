@@ -97,6 +97,7 @@ class ContactPlugin(CMSPluginBase):
         form_args = {
             'request': request,
             'from_email': instance.site_email,
+            'recipient_list': [instance.site_email],
             'subject_template_name': 'cmsplugin_contact/subject.txt',
             'template_name': self.email_template,
             }
