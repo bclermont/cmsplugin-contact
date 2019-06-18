@@ -22,4 +22,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[],
+    extras_require={
+        'South': ["South>=1.0.0"],
+    },
 )
