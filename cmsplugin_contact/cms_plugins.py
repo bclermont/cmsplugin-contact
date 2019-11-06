@@ -177,7 +177,7 @@ class ContactPlugin(CMSPluginBase):
         form = self.create_form(instance, request)
         self.render_template = getattr(form, 'template', self.render_template)
         if request.method == "POST" and form.is_valid():
-            send = getattr(form, "send", None):
+            send = getattr(form, "send", None)
             if send is None:
                 self.send(form, instance.form_name, instance.site_email, attachments=request.FILES)
             else:
