@@ -172,11 +172,25 @@ class ContactPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         request = context['request']
-        if request.method == "POST" and 'my_name' in request.POST and instance.form_name != request.POST.get('my_name','-'):
+        context["contact"] = instance
+        try:
+            my_name = request.POST["my_name"]
+            my_form = my_name == instance.form_name
+        except KeyError:
+            my_form = False
+
+        # disgusting hack to work around multiple form in same page
+        if not my_form:
+            original_method = request.method
             request.method = "GET"
-        form = self.create_form(instance, request)
+            form = self.create_form(instance, request)
+            request.method = original_method
+        else:
+            form = self.create_form(instance, request)
+
         self.render_template = getattr(form, 'template', self.render_template)
-        if request.method == "POST" and form.is_valid():
+
+        if my_form and form.is_valid():
             send = getattr(form, "send", None)
             if send is None:
                 self.send(form, instance.form_name, instance.site_email, attachments=request.FILES)
@@ -184,15 +198,9 @@ class ContactPlugin(CMSPluginBase):
                 send(instance.form_name, instance.site_email, attachments=request.FILES)
             
             if instance.redirect_url:
-                setattr(request, 'django_cms_contact_redirect_to', HttpResponseRedirect(instance.redirect_url)) 
-            context.update({
-                'contact': instance,
-            })        
+                setattr(request, 'django_cms_contact_redirect_to', HttpResponseRedirect(instance.redirect_url))        
         else:
-            context.update({
-                'contact': instance,
-                'form': form,
-            })
+            context["form"] = form
 
         return context
 
